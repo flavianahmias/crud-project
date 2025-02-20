@@ -1,37 +1,50 @@
-import { Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTableModule } from '@angular/material/table';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { ApiService, Post } from './services/api.service';
+import { TableComponent } from './components/table/table.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatSlideToggleModule, MatTableModule],
+  imports: [RouterOutlet, MatTableModule, TableComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'crud-project';
+  posts: Post[] = [];
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+  dataSource = new MatTableDataSource<Post>(this.posts);
+
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit() {
+    this.api.getPosts().subscribe({
+      next: (d) => {
+        this.posts = d;
+        this.dataSource.data = this.posts;
+      },
+      error: (e) => console.log(e),
+    });
+  }
+
+  //Não ta atualizando a lista
+  onDelete(postToDelete: Post) {
+    this.dataSource.data = this.dataSource.data.filter(
+      (post) => post.id !== postToDelete.id
+    );
+
+    this.cdr.markForCheck();
+  }
+
+  onEdit(postToEdit: Post) {
+    const postIndex = this.posts.findIndex((p) => p.id === postToEdit.id);
+    this.posts[postIndex].body = postToEdit.body;
+    this.posts[postIndex].title = postToEdit.title;
+    this.dataSource.data = [...this.posts];
+    this.cdr.markForCheck();
+  }
 }
