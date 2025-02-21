@@ -17,7 +17,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { Post } from '../../services/api.service';
 import { DeletePostModal } from '../delete-post-modal/delete-post-modal.component';
-import { UpdatePostModal } from '../update-post-modal/update-post-modal.component';
+import { UpdatePostModal } from '../update-modal/update-modal.component';
 
 @Component({
   selector: 'app-table',
@@ -28,9 +28,10 @@ import { UpdatePostModal } from '../update-post-modal/update-post-modal.componen
 export class TableComponent {
   @Output() editPost = new EventEmitter<Post>();
   @Output() deletePost = new EventEmitter<Post>();
+  @Output() viewPost = new EventEmitter<Post>()
   @Input() data: Post[] = [];
 
-  displayedColumns: string[] = ['id', 'title', 'body', 'comments', 'actions'];
+  displayedColumns: string[] = ['id', 'title', 'body', 'actions'];
   readonly modal = inject(MatDialog);
 
   dataSource!: MatTableDataSource<Post>;
@@ -61,5 +62,10 @@ export class TableComponent {
         this.editPost.emit(result);
       }
     });
+  }
+
+
+  visualizar(post: Post) {
+    this.viewPost.emit(post)
   }
 }
