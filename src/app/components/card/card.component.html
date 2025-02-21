@@ -1,0 +1,33 @@
+<p>{{post.id}}</p>
+<p>Titulo do post: {{post.title}}</p>
+<p>Conteudo do post{{post.body}}</p>
+
+
+<p>Comentarios:</p>
+
+
+<div *ngFor="let comment of post.comments">
+    <p>Titulo: {{ comment.name }}</p>
+    <p>Conteudo: {{ comment.body }}</p>
+
+    <button (click)="onEditComment(comment)">Editar</button>
+    <button (click)="onDeleteComment(comment)">Deletar</button>
+
+    <hr>
+</div>
+
+
+
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+        <mat-label>Favorite food</mat-label>
+        <input matInput [(ngModel)]="title" name="title">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Leave a comment</mat-label>
+        <textarea matInput [(ngModel)]="body" name="body"></textarea>
+    </mat-form-field>
+</form>
+
+<button (click)="onCreateComment()">Criar comentario</button>
