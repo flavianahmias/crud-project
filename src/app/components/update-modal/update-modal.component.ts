@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 export interface InputData {
   title: string;
   body: string;
+  modalTitle: string;
 }
 @Component({
   selector: 'update-post-modal',
