@@ -3,24 +3,28 @@ import {
   ChangeDetectorRef,
   Component,
 } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ApiService, Post } from './services/api.service';
 import { TableComponent } from './components/table/table.component';
+import { CommonModule } from '@angular/common';
+import { CardComponent } from './components/card/card.component';
+import { Comment } from './services/api.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatTableModule, TableComponent],
+  imports: [RouterModule, RouterOutlet, MatTableModule, TableComponent, CommonModule, CardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
   posts: Post[] = [];
+  initialPage = true;
+  postSelected!: Post
 
   dataSource = new MatTableDataSource<Post>(this.posts);
 
-  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
-
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef) { }
   ngOnInit() {
     this.api.getPosts().subscribe({
       next: (d) => {
@@ -47,4 +51,43 @@ export class AppComponent {
     this.dataSource.data = [...this.posts];
     this.cdr.markForCheck();
   }
+
+  view(post: Post) {
+    this.initialPage = false
+
+
+    this.api.getPostComments(post.id).subscribe({
+      next: (d) => {
+        post.comments = d
+      },
+      error: (e) => console.log(e),
+
+    });
+
+    this.postSelected = post
+
+    console.log(this.postSelected)
+  }
+
+  onDeleteComment(comment: Comment) {
+    //Remover comentario do post
+    console.log(comment)
+  }
+
+  onEditComment(comment: Comment) {
+    //Editar comentario
+    console.log(comment)
+  }
+
+  onCreateComment() {
+    // criar comentario
+  }
+
+  setInitialPage() {
+    this.postSelected = {} as Post
+    this.initialPage = !this.initialPage;
+  }
+
+
+
 }

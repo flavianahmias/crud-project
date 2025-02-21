@@ -1,4 +1,26 @@
+<h1>oi</h1>
+<h1>oiie</h1>
+<div class="bg-sky-50 text-6xl"></div>
+<button class="bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3">Submit</button>
+<div class="bg-blue-500 text-white p-4 rounded-lg">
+    Olá, este é um exemplo do Tailwind CSS!
+</div>
+<span class="font-medium text-gray-950 dark:text-white">Tom Watson</span> mentioned you in
+<h1 class="text-3xl font-bold underline">
+    Hello world!
+</h1>
+<div *ngIf="initialPage === true; else postCardSelected">
+    <app-table [data]="posts" (editPost)="onEdit($event)" (deletePost)="onDelete($event)"
+        (viewPost)="view($event)"></app-table>
+
+</div>
 
 
-<app-table [data]="posts" (editPost)="onEdit($event)" (deletePost)="onDelete($event)"></app-table>
+<ng-template #postCardSelected>
+    <div>a</div>
+    <button (click)="setInitialPage()">Retorno</button>
 
+    <app-card [post]="postSelected" (editComment)="onEditComment($event)"
+        (deleteComment)="onDeleteComment($event)"></app-card>
+
+</ng-template>

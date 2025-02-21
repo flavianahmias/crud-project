@@ -20,11 +20,16 @@ import { MatInputModule } from '@angular/material/input';
 import { Post } from '../../services/api.service';
 
 export interface InputData {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
+  post?: {
+    userId: number;
+    id: number;
+    title: string;
+    body: string;
+  }
+  type: 'post' | 'comment'
 }
+
+
 @Component({
   selector: 'delete-post-modal',
   templateUrl: 'delete-post-modal.html',
