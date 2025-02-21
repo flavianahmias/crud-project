@@ -24,8 +24,8 @@ export interface InputData {
   modalTitle: string;
 }
 @Component({
-  selector: 'update-post-modal',
-  templateUrl: 'update-post-modal.html',
+  selector: 'update-modal',
+  templateUrl: 'update-modal.component.html',
   imports: [
     MatFormFieldModule,
     MatInputModule,
@@ -37,8 +37,8 @@ export interface InputData {
     MatDialogClose,
   ],
 })
-export class UpdatePostModal {
-  readonly dialogRef = inject(MatDialogRef<UpdatePostModal>);
+export class UpdateModalComponent {
+  readonly dialogRef = inject(MatDialogRef<UpdateModalComponent>);
   readonly data = inject<InputData>(MAT_DIALOG_DATA);
   readonly title = model(this.data.title);
   readonly body = model(this.data.body);

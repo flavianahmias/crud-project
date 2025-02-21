@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Editar {{ data.modalTitle }}</h2>
+
+<mat-dialog-content>
+  <div class="flex flex-col px-8">
+    <mat-form-field>
+      <mat-label>Título</mat-label>
+      <input matInput [(ngModel)]="title" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Conteúdo</mat-label>
+      <input matInput [(ngModel)]="body" />
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="onClose()" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>

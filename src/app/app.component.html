@@ -1,26 +1,35 @@
-<h1>oi</h1>
-<h1>oiie</h1>
-<div class="bg-sky-50 text-6xl"></div>
-<button class="bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3">Submit</button>
-<div class="bg-blue-500 text-white p-4 rounded-lg">
-    Olá, este é um exemplo do Tailwind CSS!
+<div
+  *ngIf="initialPage === true; else postCardSelected"
+  class="grid grid-cols-6 gap-4 pt-12"
+>
+  <div class="col-span-4 col-start-2">
+    <app-table
+      [data]="posts"
+      (editPost)="onEdit($event)"
+      (deletePost)="onDelete($event)"
+      (viewPost)="onView($event)"
+    ></app-table>
+  </div>
 </div>
-<span class="font-medium text-gray-950 dark:text-white">Tom Watson</span> mentioned you in
-<h1 class="text-3xl font-bold underline">
-    Hello world!
-</h1>
-<div *ngIf="initialPage === true; else postCardSelected">
-    <app-table [data]="posts" (editPost)="onEdit($event)" (deletePost)="onDelete($event)"
-        (viewPost)="view($event)"></app-table>
-
-</div>
-
 
 <ng-template #postCardSelected>
-    <div>a</div>
-    <button (click)="setInitialPage()">Retorno</button>
+  <div class="grid grid-cols-6 gap-4 pt-12">
+    <div class="col-span-4 col-start-2">
+      <div class="flex justify-end">
+        <button
+          (click)="setInitialPage()"
+          class="bg-indigo-500 hover:bg-fuchsia-500 p-2 rounded-none text-white"
+        >
+          Retorno
+        </button>
+      </div>
 
-    <app-card [post]="postSelected" (editComment)="onEditComment($event)"
-        (deleteComment)="onDeleteComment($event)"></app-card>
-
+      <app-card
+        [post]="postSelected"
+        (createComment)="onCreateComment($event)"
+        (editComment)="onEditComment($event)"
+        (deleteComment)="onDeleteComment($event)"
+      ></app-card>
+    </div>
+  </div>
 </ng-template>

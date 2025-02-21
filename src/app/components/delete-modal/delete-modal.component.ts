@@ -20,19 +20,12 @@ import { MatInputModule } from '@angular/material/input';
 import { Post } from '../../services/api.service';
 
 export interface InputData {
-  post?: {
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
-  }
-  type: 'post' | 'comment'
+  modalTitle: string;
 }
 
-
 @Component({
-  selector: 'delete-post-modal',
-  templateUrl: 'delete-post-modal.html',
+  selector: 'delete-modal',
+  templateUrl: 'delete-modal.component.html',
   imports: [
     MatFormFieldModule,
     MatInputModule,
@@ -44,8 +37,8 @@ export interface InputData {
     MatDialogClose,
   ],
 })
-export class DeletePostModal {
-  readonly dialogRef = inject(MatDialogRef<DeletePostModal>);
+export class DeleteModalComponent {
+  readonly dialogRef = inject(MatDialogRef<DeleteModalComponent>);
   readonly data = inject<InputData>(MAT_DIALOG_DATA);
 
   onNoClick(): void {

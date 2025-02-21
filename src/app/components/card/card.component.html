@@ -1,33 +1,44 @@
-<p>{{post.id}}</p>
-<p>Titulo do post: {{post.title}}</p>
-<p>Conteudo do post{{post.body}}</p>
+<p class="text-2xl">{{ post.title }}</p>
+<p class="text-sm/8">{{ post.body }}</p>
 
+<p class="text-xl ps-8 pt-6">Comentários:</p>
+<div *ngFor="let comment of post.comments" class="p-8">
+  <p class="text-2xl">{{ comment.name }}</p>
+  <p class="text-sm/8">{{ comment.body }}</p>
 
-<p>Comentarios:</p>
+  <button
+    class="bg-indigo-500 hover:bg-fuchsia-500 p-2 rounded-none text-white mr-4"
+    (click)="onEditComment(comment)"
+  >
+    Editar
+  </button>
+  <button
+    class="bg-indigo-500 hover:bg-fuchsia-500 p-2 rounded-none text-white mb-8"
+    (click)="onDeleteComment(comment)"
+  >
+    Deletar
+  </button>
 
-
-<div *ngFor="let comment of post.comments">
-    <p>Titulo: {{ comment.name }}</p>
-    <p>Conteudo: {{ comment.body }}</p>
-
-    <button (click)="onEditComment(comment)">Editar</button>
-    <button (click)="onDeleteComment(comment)">Deletar</button>
-
-    <hr>
+  <mat-divider></mat-divider>
 </div>
 
+<form class="example-form flex flex-col px-8">
+  <mat-form-field class="example-full-width">
+    <mat-label>Título</mat-label>
+    <input matInput [(ngModel)]="title" name="title" />
+  </mat-form-field>
 
-
-<form class="example-form">
-    <mat-form-field class="example-full-width">
-        <mat-label>Favorite food</mat-label>
-        <input matInput [(ngModel)]="title" name="title">
-    </mat-form-field>
-
-    <mat-form-field class="example-full-width">
-        <mat-label>Leave a comment</mat-label>
-        <textarea matInput [(ngModel)]="body" name="body"></textarea>
-    </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Conteúdo</mat-label>
+    <textarea matInput [(ngModel)]="body" name="body"></textarea>
+  </mat-form-field>
 </form>
 
-<button (click)="onCreateComment()">Criar comentario</button>
+<div class="flex justify-end mb-8">
+  <button
+    (click)="onCreateComment()"
+    class="px-8 bg-indigo-500 hover:bg-fuchsia-500 p-2 rounded-none text-white mr-8"
+  >
+    Criar comentario
+  </button>
+</div>
