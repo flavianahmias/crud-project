@@ -42,13 +42,23 @@ export class AppComponent {
   }
 
   onDelete(postToDelete: Post) {
-    this.posts = this.posts.filter((p) => p.id !== postToDelete.id);
+    this.api.deletePost(postToDelete).subscribe({
+      next: () => {
+        this.posts = this.posts.filter((p) => p.id !== postToDelete.id);
+      },
+      error: (e) => console.log(e),
+    });
   }
 
   onEdit(postToEdit: Post) {
-    const postIndex = this.posts.findIndex((p) => p.id === postToEdit.id);
-    this.posts[postIndex].body = postToEdit.body;
-    this.posts[postIndex].title = postToEdit.title;
+    this.api.updatePost(postToEdit).subscribe({
+      next: () => {
+        const postIndex = this.posts.findIndex((p) => p.id === postToEdit.id);
+        this.posts[postIndex].body = postToEdit.body;
+        this.posts[postIndex].title = postToEdit.title;
+      },
+      error: (e) => console.log(e),
+    });
   }
 
   onView(post: Post) {

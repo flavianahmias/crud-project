@@ -42,8 +42,8 @@ export class ApiService {
     return this.http.put<Post>(`${this.apiUrl}/${post.id}`, post);
   }
 
-  deletePost(post: Post): void {
-    this.http.delete<void>(`${this.apiUrl}/${post.id}`);
+  deletePost(post: Post): Observable<Post> {
+    return this.http.delete<Post>(`${this.apiUrl}/${post.id}`);
   }
 
   getPostComments(postId: number): Observable<Comment[]> {
